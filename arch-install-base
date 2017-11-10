@@ -7,8 +7,8 @@ dd if=archlinux.img of=/dev/sdX bs=16M && sync # on linux
 
 # Boot from the usb. If the usb fails to boot, make sure that secure boot is disabled in the BIOS configuration.
 
-# Set swedish keymap
-loadkeys sv-latin1
+# Set keymap
+loadkeys us
 
 # This assumes a wifi only system...
 wifi-menu
