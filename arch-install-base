@@ -1,11 +1,11 @@
 # Install ARCH Linux with encrypted file-system and UEFI
 # The official installation guide (https://wiki.archlinux.org/index.php/Installation_Guide) contains a more verbose description.
-
 # Download the archiso image from https://www.archlinux.org/
 # Copy to a usb-drive
 dd if=archlinux.img of=/dev/sdX bs=16M && sync # on linux
 
-# Boot from the usb. If the usb fails to boot, make sure that secure boot is disabled in the BIOS configuration.
+MYHOSTNAME="" 
+MYUSERNAME="" 
 
 # Set keymap
 loadkeys us
@@ -20,7 +20,7 @@ cgdisk /dev/sdX
 3 100% size partiton # (to be encrypted) Hex code 8300
 
 mkfs.vfat -F32 /dev/sdX1
-mkfs.ext2 /dev/sdX2
+mkfs.ext4 /dev/sdX2
 
 # Setup the encryption of the system
 cryptsetup -c aes-xts-plain64 -y --use-random luksFormat /dev/sdX3
@@ -63,7 +63,7 @@ ln -s /usr/share/zoneinfo/Europe/Stockholm /etc/localtime
 hwclock --systohc --utc
 
 # Set the hostname
-echo MYHOSTNAME > /etc/hostname
+echo $MYHOSTNAME > /etc/hostname
 
 # Update locale
 echo LANG=en_US.UTF-8 >> /etc/locale.conf
@@ -74,8 +74,8 @@ echo LC_ALL=C >> /etc/locale.conf
 passwd
 
 # Add real user remove -s flag if you don't whish to use zsh
-# useradd -m -g users -G wheel -s /bin/zsh MYUSERNAME
-# passwd MYUSERNAME
+useradd -m -g users -G wheel $MYUSERNAME
+passwd $MYUSERNAME
 
 # Configure mkinitcpio with modules needed for the initrd image
 vim /etc/mkinitcpio.conf
