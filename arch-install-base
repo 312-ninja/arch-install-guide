@@ -47,7 +47,7 @@ mount /dev/sdX1 /mnt/boot/efi
 
 # Install the system also includes stuff needed for starting wifi when first booting into the newly installed system
 # Unless vim and zsh are desired these can be removed from the command
-pacstrap /mnt base base-devel grub-efi-x86_64 zsh vim git efibootmgr dialog wpa_supplicant
+pacstrap /mnt base base-devel linux linux-firmware grub-efi-x86_64 zsh vim git efibootmgr dialog wpa_supplicant
 
 # 'install' fstab
 genfstab -pU /mnt >> /mnt/etc/fstab
